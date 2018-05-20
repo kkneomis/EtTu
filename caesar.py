@@ -1,0 +1,75 @@
+import requests
+import json
+import re
+import string
+import random
+from bs4 import BeautifulSoup
+
+
+def get_random_text():
+	r = requests.get('http://www.randomtext.me/api/gibberish/p-1/25-45')
+	res = r.json()['text_out']
+
+	soup = BeautifulSoup(res, 'lxml')
+	clear_text =  soup.text
+
+	return str(clear_text)
+
+
+def caesar(plaintext, shift):
+    alphabet = string.ascii_lowercase
+    split_message = plaintext.split(' ')
+    output = []
+
+    print split_message
+    for message_part in split_message:
+        indices = [(alphabet.index(c) + shift) % len(alphabet) \
+                for c in message_part\
+                if c in alphabet]
+        encrypted_part = ''.join([alphabet[i] for i in indices])
+        output.append(encrypted_part)
+        print encrypted_part    
+    return (' '.join(output))
+
+def make_caesar_challenge(number_of_problems):
+	problems = []
+	for i in range(number_of_problems):
+		cleartext = get_random_text()
+		shift = random.randint(1,25)
+		ciphertext = caesar(cleartext, shift)
+
+		problems.append({
+				"cleartext":cleartext,
+				"ciphertext":ciphertext,
+				"shift": shift
+			})
+
+	return problems
+
+def random_substution(plaintext):
+    alphabet = string.ascii_lowercase
+    new_alphabet = ''.join(random.sample(alphabet,len(alphabet)))
+    trantab = string.maketrans(alphabet, new_alphabet)
+    return plaintext.translate(trantab)
+
+
+def make_rs_challenge(number_of_problems):
+	problems = []
+	for i in range(number_of_problems):
+		cleartext = get_random_text()
+		ciphertext = random_substution(cleartext)
+		problems.append({
+				"cleartext":cleartext,
+				"ciphertext":ciphertext,
+			})
+	return problems
+
+	
+if __name__ == "__main__":
+	shift = random.randint(1,25)
+	print caesar( shift)
+	print "shift, is", shift
+	guess = int(raw_input("Guess the shift:"))
+	while guess != shift:
+		guess = int(raw_input("Nah fam, guess again"))
+	print "Congratulations!"

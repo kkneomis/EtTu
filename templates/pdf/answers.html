@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block body %}
+
+	<h1>ET TU: Ciphering (Answers)</h1><hr><br/>
+
+	{% for challenge  in challenges %}
+		<h4>Probem #{{ loop.index  }}</h4>
+		<p>
+			<strong>Ciphertext:</strong><br/> {{ challenge.ciphertext}} <br>
+		<p>
+		<p>
+			<strong>Cleartext:</strong><br/> {{ challenge.cleartext}}
+		{% if challenge.shift %}
+		</p>
+			<strong>Shift:</strong>{{ challenge.shift}}
+		{% endif %}
+		</p>
+		<br/><br/>
+
+	{% endfor %}
+{% endblock %}

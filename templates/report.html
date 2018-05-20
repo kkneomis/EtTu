@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block body %}
+
+	<h1>ET TU: Caesar Ciphering</h1>
+
+	{% for challenge  in challenges %}
+		<p>
+		<strong>Probem #{{ loop.index  }}</strong><br/>
+		{{ challenge.ciphertext}}
+		<br/><br/>
+		</p>
+
+	{% endfor %}
+{% endblock %}
