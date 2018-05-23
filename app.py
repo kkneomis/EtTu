@@ -7,6 +7,7 @@ from caesar import make_caesar_challenge, make_rs_challenge
 
 #just for me :)
 import json
+import string
 
 # Instantiating the flask Object
 app = Flask(__name__)
@@ -15,6 +16,20 @@ app = Flask(__name__)
 def home():
     """Render the main page"""
     return render_template("index.html")
+
+
+@app.route('/solve')
+def solve():
+    """Render the main page"""
+    text =  make_caesar_challenge(1)[0]
+    
+    alphabet = string.ascii_lowercase
+
+    cipher_text_freq =  get_letter_frequencies(text['ciphertext'])
+    return render_template("solve.html", 
+    						text=text,
+    						alphabet=alphabet, 
+    						cipher_text_freq = cipher_text_freq)
 
 
 @app.route('/processinput', methods=['GET', 'POST'])
@@ -35,6 +50,14 @@ def processinput():
 		return redirect(url_for('home'))
 
 	
+def get_letter_frequencies(phrase):
+	alphabet = string.ascii_lowercase
+	freq = {}
+	for letter in alphabet:
+		freq[letter] = round(phrase.count(letter)/float(len(phrase)),4)
+	return freq.values()
+
+
 
 if __name__ == "__main__":   
 	app.run(debug=True)

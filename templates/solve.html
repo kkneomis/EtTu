@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block body %}
+
+ <style type="text/css">
+        input[type=text]{
+            border: 3px solid #555;
+            margin-bottom: 5px;
+            text-align: center;
+            padding: 5px;
+            font-weight: bold;
+        }
+
+        input[type=text].cipher{
+            border: 3px solid #fff;
+            margin-bottom: 5px;
+            text-align: center;
+            padding: 5px;
+        }
+
+    </style>
+
+
+    
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <h2>Create a Challenge</h2>
+            <div class="well">
+                <form action="{{ url_for('processinput') }}" method="POST">
+                    
+                    {% for letter in text.ciphertext %}
+                        {% if letter == ' ' %}
+                            &nbsp&nbsp&nbsp
+                        {% else %}
+                            <input type="text" size="1"  class="cipher"  type="number" value="{{ letter }}" disabled>
+                        {% endif %}
+
+                    {% endfor %}
+                    <br><br>
+                    {% for letter in text.cleartext %}
+                        {% if letter == ' ' %}
+                            &nbsp&nbsp&nbsp
+                        {% else %}
+                            <input type="text" size="1" class="{{letter}}" id="test" type="number" value="" required>
+                        {% endif %}
+
+                    {% endfor %}
+                 
+                        
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <canvas id="normalchart"></canvas>
+        </div>
+        <div class="col-md-6">
+            <canvas id="cipherchart"></canvas>
+        </div>
+    </div>
+
+   
+    <script type="text/javascript">
+        {% for letter in alphabet %}
+            $('.{{letter}}').bind('keypress keyup blur', function() {
+                console.log("keyup")
+                $('.{{letter}}').val($(this).val());
+            });
+        {% endfor %}
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script type="text/javascript">
+        
+        var normalchart = document.getElementById('normalchart').getContext('2d');
+    
+        var chart = new Chart(normalchart, {
+            // The type of chart we want to create
+            type: 'bar',
+
+            // The data for our dataset
+            data: {
+                labels: ['a', 'c', 'b', 'e', 'd', 'g', 'f', 'i', 'h', 'k', 'j', 'm', 'l', 'o', 'n', 'q', 'p', 's', 'r', 'u', 't', 'w', 'v', 'y', 'x', 'z']
+,
+                datasets: [{
+                    label: "Letter Frequencies in English",
+                    backgroundColor: 'rgb(0,0,128)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [0.08167, 0.02782, 0.01492, 0.12702, 0.04253, 0.02015, 0.02228, 0.06966, 0.06094, 0.00772, 0.00153, 0.02406, 0.04025, 0.07507, 0.06749, 0.00095, 0.01929, 0.06327, 0.05987, 0.02758, 0.09056, 0.0236, 0.00978, 0.01974, 0.0015, 0.00074]
+
+                }]
+
+            },
+
+            /*{
+                    label: "Letter Frequencies in ciphertext",
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: {{ cipher_text_freq }},
+                }*/
+            // Configuration options go here
+            options: {}
+        });
+
+        var cipherchart = document.getElementById('cipherchart').getContext('2d');
+        var chart = new Chart(cipherchart, {
+            // The type of chart we want to create
+            type: 'bar',
+
+            // The data for our dataset
+            data: {
+                labels: ['a', 'c', 'b', 'e', 'd', 'g', 'f', 'i', 'h', 'k', 'j', 'm', 'l', 'o', 'n', 'q', 'p', 's', 'r', 'u', 't', 'w', 'v', 'y', 'x', 'z']
+,
+                datasets: [{
+                    label: "Letter Frequencies in ciphertext",
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: {{ cipher_text_freq }}
+                }]
+
+            },
+
+            /*{
+                    label: "Letter Frequencies in ciphertext",
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: {{ cipher_text_freq }},
+                }*/
+            // Configuration options go here
+            options: {}
+        });
+
+
+        
+    </script>
+
+
+    
+
+{% endblock %}
+
