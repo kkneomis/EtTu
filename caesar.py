@@ -6,29 +6,33 @@ import random
 from bs4 import BeautifulSoup
 
 
-def get_random_text():
-	r = requests.get('http://www.randomtext.me/api/gibberish/p-1/25-45')
-	res = r.json()['text_out']
 
-	soup = BeautifulSoup(res, 'lxml')
-	clear_text =  soup.text
+with open('config/quotes.txt', 'r') as f:
+	quotes = json.load(f)
 
-	return str(clear_text)
+
+def get_random_text(level="easy"):
+	'''
+	Get quotes from config
+	level is easy, med, or hard
+	'''
+	# we haven't initialized it yet
+	quote = random.choice(quotes[level])
+	return quote
 
 
 def caesar(plaintext, shift):
     alphabet = string.ascii_lowercase
-    split_message = plaintext.split(' ')
+    split_message = plaintext.lower().split(' ')
     output = []
 
-    print split_message
     for message_part in split_message:
         indices = [(alphabet.index(c) + shift) % len(alphabet) \
-                for c in message_part\
-                if c in alphabet]
+                   for c in message_part\
+                   if c in alphabet]
         encrypted_part = ''.join([alphabet[i] for i in indices])
         output.append(encrypted_part)
-        print encrypted_part    
+
     return (' '.join(output))
 
 def make_caesar_challenge(number_of_problems):
@@ -64,7 +68,7 @@ def make_rs_challenge(number_of_problems):
 			})
 	return problems
 
-	
+
 if __name__ == "__main__":
 	shift = random.randint(1,25)
 	print caesar( shift)

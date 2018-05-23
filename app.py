@@ -25,11 +25,13 @@ def solve():
     
     alphabet = string.ascii_lowercase
 
-    cipher_text_freq =  get_letter_frequencies(text['ciphertext'])
+    cipher_text_freq =  get_letter_frequencies(text['ciphertext'])['values']
+    cipher_text_keys = json.dumps(get_letter_frequencies(text['ciphertext'])['keys'])
     return render_template("solve.html", 
     						text=text,
     						alphabet=alphabet, 
-    						cipher_text_freq = cipher_text_freq)
+    						cipher_text_freq = cipher_text_freq,
+    						cipher_text_keys = cipher_text_keys)
 
 
 @app.route('/processinput', methods=['GET', 'POST'])
@@ -54,8 +56,12 @@ def get_letter_frequencies(phrase):
 	alphabet = string.ascii_lowercase
 	freq = {}
 	for letter in alphabet:
-		freq[letter] = round(phrase.count(letter)/float(len(phrase)),4)
-	return freq.values()
+		freq[letter] = round(phrase.count(letter)/float(len(phrase)),10)
+	
+
+	return { "keys":sorted(freq, key=freq.get, reverse=True),
+	         "values": sorted(freq.values(), reverse=True) }
+	
 
 
 
