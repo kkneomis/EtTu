@@ -11,7 +11,7 @@ with open('config/quotes.txt', 'r') as f:
 	quotes = json.load(f)
 
 
-def get_random_text(level="easy"):
+def get_random_text(level="hard"):
 	'''
 	Get quotes from config
 	level is easy, med, or hard
@@ -61,7 +61,7 @@ def make_rs_challenge(number_of_problems):
 	problems = []
 	for i in range(number_of_problems):
 		cleartext = get_random_text()
-		ciphertext = random_substution(cleartext)
+		ciphertext = random_substution(str(cleartext))
 		problems.append({
 				"cleartext":cleartext,
 				"ciphertext":ciphertext,

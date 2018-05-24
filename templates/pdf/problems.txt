@@ -1,0 +1,7 @@
+ET TU: {{ cipher_type }}
+
+{% for challenge  in challenges %}
+Problem #{{ loop.index  }}
+{{ challenge.ciphertext}}
+	
+{% endfor %}

@@ -1,0 +1,15 @@
+ET TU: {{ cipher_type }}
+
+{% for challenge  in challenges %}
+Problem #{{ loop.index  }}
+Ciphertext:
+{{ challenge.ciphertext}}
+
+Cleartext: 
+{{ challenge.cleartext}}
+
+{% if challenge.shift %}
+Shift: {{ challenge.shift}}
+{% endif %}
+	
+{% endfor %}
