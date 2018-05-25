@@ -89,7 +89,7 @@ def download():
 @app.route('/solve')
 def solve():
     """Render the main page"""
-    text =  make_caesar_challenge(1)[0]
+    text =  make_caesar_challenge(1, level="hard")[0]
     
     alphabet = string.ascii_lowercase
 
@@ -100,7 +100,6 @@ def solve():
     						alphabet=alphabet, 
     						cipher_text_freq = cipher_text_freq,
     						cipher_text_keys = cipher_text_keys)
-
 
 
 

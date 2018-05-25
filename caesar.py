@@ -43,7 +43,7 @@ def make_caesar_challenge(number_of_problems, level="easy"):
 		ciphertext = caesar(cleartext, shift)
 
 		problems.append({
-				"cleartext":cleartext,
+				"cleartext":cleartext.lower(),
 				"ciphertext":ciphertext,
 				"shift": shift
 			})

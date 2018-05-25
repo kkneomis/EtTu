@@ -41,7 +41,7 @@
                         {% if letter == ' ' %}
                             &nbsp&nbsp&nbsp
                         {% else %}
-                            <input type="text" size="1" class="{{letter}}" id="test" type="number" value="" required>
+                            <input type="text" size="1" class="{{letter | lower }} " id="test" type="number" value="" required>
                         {% endif %}
 
                     {% endfor %}
@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        
+
         <div class="col-md-6">
             <div class="card card-chart">
                 <canvas id="cipherchart"></canvas>
@@ -81,7 +81,6 @@
     <script type="text/javascript">
         {% for letter in alphabet %}
             $('.{{letter}}').bind('keypress keyup blur', function() {
-                console.log("keyup")
                 $('.{{letter}}').val($(this).val());
             });
         {% endfor %}
