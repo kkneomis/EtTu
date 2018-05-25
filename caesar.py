@@ -35,10 +35,11 @@ def caesar(plaintext, shift):
 
     return (' '.join(output))
 
-def make_caesar_challenge(number_of_problems):
+def make_caesar_challenge(number_of_problems, level="easy"):
 	problems = []
 	for i in range(number_of_problems):
-		cleartext = get_random_text()
+		cleartext = get_random_text(level)
+		print cleartext
 		shift = random.randint(1,25)
 		ciphertext = caesar(cleartext, shift)
 
@@ -57,10 +58,10 @@ def random_substution(plaintext):
     return plaintext.translate(trantab)
 
 
-def make_rs_challenge(number_of_problems):
+def make_rs_challenge(number_of_problems, level="easy"):
 	problems = []
 	for i in range(number_of_problems):
-		cleartext = get_random_text()
+		cleartext = get_random_text(level)
 		ciphertext = random_substution(str(cleartext))
 		problems.append({
 				"cleartext":cleartext,

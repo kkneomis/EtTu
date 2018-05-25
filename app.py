@@ -19,8 +19,48 @@ app.config['UPLOAD_FOLDER'] = '/tmp/'
 
 @app.route('/')
 def home():
-    """Render the main page"""
+    """
+    Render the main page
+	Request goes to process input
+    """
     return render_template("index.html")
+
+@app.route('/processinput', methods=['GET', 'POST'])
+def processinput():
+	"""
+	Create a challenge set based on specification
+	Use can get these files on the download page
+	"""
+	challenge_type =  int(request.form['challenge_type'])
+	number_of_problems = int(request.form['number_of_problems'])
+	level = request.form['difficulty']
+
+
+	if challenge_type == 1:
+		challenges = make_caesar_challenge(number_of_problems, level=level)
+		#print json.dumps(challenges, indent=4)
+		questions = render_template('pdf/problems.txt', 
+									challenges=challenges,
+									cipher_type = "Caesar Cipher")
+		answers = render_template('pdf/answers.txt', 
+									challenges=challenges,
+									cipher_type = "Caesar Cipher")
+
+		return redirect(url_for('download', 
+								questions=questions, answers= answers))
+	elif challenge_type == 2:
+		challenges = make_rs_challenge(number_of_problems, level=level)
+		questions = render_template('pdf/problems.txt', 
+									challenges=challenges,
+									cipher_type = "Random Substitution")
+		answers = render_template('pdf/answers.txt', 
+									challenges=challenges,
+									cipher_type = "Random Substitution")
+
+	return redirect(url_for('download', 
+							questions=questions, 
+							answers= answers))
+
 
 @app.route('/return-files/', methods=['GET', 'POST'])
 def return_files():
@@ -62,36 +102,7 @@ def solve():
     						cipher_text_keys = cipher_text_keys)
 
 
-@app.route('/processinput', methods=['GET', 'POST'])
-def processinput():
-	challenge_type =  int(request.form['challenge_type'])
-	text_length = int(request.form['text_length'])
-	number_of_problems = int(request.form['number_of_problems'])
 
-	if challenge_type == 1:
-		challenges = make_caesar_challenge(number_of_problems)
-		#print json.dumps(challenges, indent=4)
-		questions = render_template('pdf/problems.txt', 
-									challenges=challenges,
-									cipher_type = "Caesar Cipher")
-		answers = render_template('pdf/answers.txt', 
-									challenges=challenges,
-									cipher_type = "Caesar Cipher")
-
-		return redirect(url_for('download', 
-								questions=questions, answers= answers))
-	elif challenge_type == 2:
-		challenges = make_rs_challenge(number_of_problems)
-		questions = render_template('pdf/problems.txt', 
-									challenges=challenges,
-									cipher_type = "Random Substitution")
-		answers = render_template('pdf/answers.txt', 
-									challenges=challenges,
-									cipher_type = "Random Substitution")
-
-	return redirect(url_for('download', 
-							questions=questions, 
-							answers= answers))
 
 	
 def get_letter_frequencies(phrase):
