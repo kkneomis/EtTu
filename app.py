@@ -80,7 +80,6 @@ def return_files():
 	data = request.args.get("data")
 	filename = os.path.join(app.config['UPLOAD_FOLDER'], "ettuproblems.txt")
 	#os.remove(filename)
-	print data
 	with open(filename, 'w') as file:
 		file.write(data)
 	try:
