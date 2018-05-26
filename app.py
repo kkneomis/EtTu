@@ -64,8 +64,8 @@ def processinput():
 
 @app.route('/download')
 def download():
-	questions = config['questions']
-	answers = config['answers']
+	questions = config.get('questions', "None")
+	answers = config.get('answers', "None")
 	
 	questions_link = url_for('return_files', data=questions)
 	answers_link = url_for('return_files', data=answers)
