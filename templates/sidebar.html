@@ -1,0 +1,21 @@
+<div class="sidebar-wrapper">
+                <ul class="nav">
+                    <li {%- if request.path == "/" %}
+                        class="active"
+                        {% endif%} >
+                        <a href="/">
+                            <i class="material-icons">view_module</i>
+                            <p>Create problems!</p>
+                        </a>
+                    </li>
+                    <li {%- if request.path == "/solve" %}
+                        class="active"
+                        {% endif%} >
+                        <a href="/solve">
+                            <i class="material-icons">extension</i>
+                            <p>Solve a puzzle</p>
+                        </a>
+                    </li>
+                    
+                    
+                </ul>
