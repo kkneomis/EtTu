@@ -11,11 +11,13 @@ import json
 import string
 import os
 import StringIO 
+import requests
 from werkzeug import secure_filename
 
 # Instantiating the flask Object
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = '/tmp/'
+config = {}
 
 @app.route('/')
 def home():
@@ -46,8 +48,6 @@ def processinput():
 									challenges=challenges,
 									cipher_type = "Caesar Cipher")
 
-		return redirect(url_for('download', 
-								questions=questions, answers= answers))
 	elif challenge_type == 2:
 		challenges = make_rs_challenge(number_of_problems, level=level)
 		questions = render_template('pdf/problems.txt', 
@@ -57,9 +57,22 @@ def processinput():
 									challenges=challenges,
 									cipher_type = "Random Substitution")
 
-	return redirect(url_for('download', 
-							questions=questions, 
-							answers= answers))
+
+	config['questions'] = questions
+	config['answers'] = answers
+	return redirect(url_for('download'))
+
+@app.route('/download')
+def download():
+	questions = config['questions']
+	answers = config['answers']
+	
+	questions_link = url_for('return_files', data=questions)
+	answers_link = url_for('return_files', data=answers)
+
+	return render_template('download.html',
+							questions_link=questions_link,
+							answers_link=answers_link)
 
 
 @app.route('/return-files/', methods=['GET', 'POST'])
@@ -75,16 +88,7 @@ def return_files():
 	except Exception as e:
 		return str(e)
 
-@app.route('/download')
-def download():
-	questions = request.args.get("questions")
-	answers = request.args.get("answers")
-	questions_link = url_for('return_files', data=questions)
-	answers_link = url_for('return_files', data=answers)
 
-	return render_template('download.html',
-							questions_link=questions_link,
-							answers_link=answers_link)
 
 @app.route('/solve')
 def solve():

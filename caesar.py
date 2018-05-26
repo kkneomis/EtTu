@@ -16,7 +16,7 @@ def get_random_text(level="hard"):
 	level is easy, med, or hard
 	'''
 	# we haven't initialized it yet
-	quote = random.choice(quotes[level])
+	quote = random.choice(quotes[level]).lower()
 	return quote
 
 
