@@ -37,8 +37,8 @@ def caesar(plaintext, shift):
 def make_caesar_challenge(number_of_problems, level="easy"):
 	problems = []
 	#To be safe, max out at 200
-	if number_of_problems > 200:
-		number_of_problems = 200
+	if number_of_problems > 20:
+		number_of_problems = 20
 	for i in range(number_of_problems):
 		cleartext = get_random_text(level)
 		shift = random.randint(1,25)
