@@ -36,9 +36,11 @@ def caesar(plaintext, shift):
 
 def make_caesar_challenge(number_of_problems, level="easy"):
 	problems = []
+	#To be safe, max out at 200
+	if number_of_problems > 200:
+		number_of_problems = 200
 	for i in range(number_of_problems):
 		cleartext = get_random_text(level)
-		print cleartext
 		shift = random.randint(1,25)
 		ciphertext = caesar(cleartext, shift)
 
