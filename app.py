@@ -27,6 +27,9 @@ def home():
     """
     return render_template("index.html")
 
+
+
+
 @app.route('/processinput', methods=['GET', 'POST'])
 def processinput():
 	"""
@@ -87,12 +90,20 @@ def return_files():
 	except Exception as e:
 		return str(e)
 
-
-
 @app.route('/solve')
 def solve():
+    """
+    Render the solve page
+	Request goes to solve_problem
+    """
+    return render_template("solve_main.html")
+
+@app.route('/solve_problem', methods=['GET', 'POST'])
+def solve_problem():
     """Render the main page"""
-    text =  make_caesar_challenge(1, level="hard")[0]
+    challenge_type = int(request.form['challenge_type'])
+    level = request.form['difficulty']
+    text =  make_caesar_challenge(1, level=level)[0]
     
     alphabet = string.ascii_lowercase
 

@@ -42,16 +42,33 @@
                     Et Tu?
                 </a>
             </div>
+             
             {% include "sidebar.html" %}
-            </div>
         </div>
         {% include "header.html" %}
         <div class="content">
             <div class="container-fluid">
             {% block body %}{% endblock %}
             </div>
+               <footer class="footer">
+                    <p class="copyright">
+                        &copy;
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>
+                        <a href="http://urbannerd.org">Urban Nerd</a>, made with love for a safer web
+                    </p>
+            </footer>
         </div>       
     </div>
+    
+    <style>
+        .caesar{
+            text-align: center;
+            margin: 20px;
+        }  
+    </style>
+     
  
 
   </body>

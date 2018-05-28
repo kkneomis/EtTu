@@ -1,5 +1,6 @@
 <div class="sidebar-wrapper">
                 <ul class="nav">
+                    <li><img src="{{ url_for('static', filename='img/caesar.png') }}" class="img-responsive caesar" width="75px"></li>
                     <li {%- if request.path == "/" %}
                         class="active"
                         {% endif%} >
@@ -19,3 +20,4 @@
                     
                     
                 </ul>
+</div>

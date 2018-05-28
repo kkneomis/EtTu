@@ -20,13 +20,14 @@
     </style>
 
 
-    
-
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <h2>Decrypt the quote!</h2>
-            <div class="well">
-                <form action="{{ url_for('processinput') }}" method="POST">
+ <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" data-background-color="red">
+                <h4 class="title">Decrypt the quote!</h4>
+                <p class="category"></p>
+            </div>
+            <div class="card-content">
+                <div class="well">
                     
                     {% for letter in text.ciphertext %}
                         {% if letter == ' ' %}
@@ -46,20 +47,12 @@
 
                     {% endfor %}
                  
-                        
-                </form>
             </div>
-        </div>
-    </div>
+            </div>
+     </div>
+</div>
 
-    <div class="row">
-        <div class="col-md-6">
-            
-        </div>
-        <div class="col-md-6">
-            
-        </div>
-    </div>
+
     <div class="row">
         
         <div class="col-md-6">
@@ -76,6 +69,15 @@
         </div>
 
     </div>
+
+<div class="row">
+    <div class="col-md-6">
+        <a href="javascript:window.location.reload(true)" type="submit" class="btn btn-primary btn-lg btn-block">Try another like this!</a>
+    </div>
+    <div class="col-md-6">
+        <a href="/solve" class="btn btn-info btn-lg btn-block">Switch it up</a>
+    </div>
+</div>
 
    
     <script type="text/javascript">

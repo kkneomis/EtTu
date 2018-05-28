@@ -1,13 +1,15 @@
+
+
 {% extends "base.html" %}
 {% block body %}
     <div class="col-md-8 col-md-offset-2">
         <div class="card">
-            <div class="card-header" data-background-color="green">
+            <div class="card-header" data-background-color="orange">
                 <h4 class="title">Create a Challenge</h4>
-                <p class="category">Fill out this form to generate a text file with encryption challenges.</p>
+                <p class="category">Choose what type of challenge you want to solve</p>
             </div>
             <div class="card-content">
-                <form action="{{ url_for('processinput') }}" method="POST">
+                <form action="{{ url_for('solve_problem') }}" method="POST">
 
                     <div class="form-group">
                         <label>Classification</label>
@@ -25,11 +27,6 @@
                           <option value="hard">Hard</option>
                         </select>
                     </div>     
-
-                    <div class="form-group">
-                        <label>Number of problems</label>
-                        <input type="text" name="number_of_problems" class="form-control" type="number" value="5" required>
-                    </div>    
 
                     <div class="form-group">
                         <input type="submit" value="Create Problems" class="btn btn-primary btn-lg btn-block">
