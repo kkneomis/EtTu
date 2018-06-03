@@ -3,6 +3,7 @@ import json
 import re
 import string
 import random
+import re
 
 
 
@@ -11,13 +12,11 @@ with open('config/quotes.txt', 'r') as f:
 
 
 def get_random_text(level="hard"):
-	'''
-	Get quotes from config
-	level is easy, med, or hard
-	'''
-	# we haven't initialized it yet
-	quote = random.choice(quotes[level]).lower()
-	return quote
+    '''Get quotes from config - level is easy, med, or hard'''
+    quote = random.choice(quotes[level]).lower()
+    # remove quotes and punctuation
+    quote =  re.sub(r'([^\s\w]|_)+', '', quote)
+    return quote
 
 
 def caesar(plaintext, shift):
@@ -45,8 +44,8 @@ def make_caesar_challenge(number_of_problems, level="easy"):
 		ciphertext = caesar(cleartext, shift)
 
 		problems.append({
-				"cleartext":cleartext.lower(),
-				"ciphertext":ciphertext,
+				"cleartext":cleartext.split(),
+				"ciphertext":ciphertext.split(),
 				"shift": shift
 			})
 
@@ -65,8 +64,8 @@ def make_rs_challenge(number_of_problems, level="easy"):
 		cleartext = get_random_text(level)
 		ciphertext = random_substution(str(cleartext))
 		problems.append({
-				"cleartext":cleartext,
-				"ciphertext":ciphertext,
+				"cleartext":cleartext.split(),
+				"ciphertext":ciphertext.split(),
 			})
 	return problems
 

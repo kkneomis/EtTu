@@ -16,6 +16,10 @@
             text-align: center;
             padding: 5px;
         }
+     
+     span{
+        display: inline-block
+     }
 
     </style>
 
@@ -28,23 +32,20 @@
             </div>
             <div class="card-content">
                 <div class="well">
-                    
-                    {% for letter in text.ciphertext %}
-                        {% if letter == ' ' %}
-                            &nbsp&nbsp&nbsp
-                        {% else %}
-                            <input type="text" size="1"  class="cipher"  type="number" value="{{ letter }}" disabled>
-                        {% endif %}
-
+                    {% for word in text.ciphertext %}
+                        <span>{% for letter in word %}
+                                <input type="text" size="1"  class="cipher"  type="number" value="{{ letter }}" disabled>
+                        {% endfor %}
+                        </span>
+                        &nbsp&nbsp&nbsp
                     {% endfor %}
                     <br><br>
-                    {% for letter in text.cleartext %}
-                        {% if letter == ' ' %}
-                            &nbsp&nbsp&nbsp
-                        {% else %}
+                    {% for word in text.cleartext %}
+                        <span>{% for letter in word %}
                             <input type="text" size="1" class="{{letter | lower }} " id="test" type="number" value="" required>
-                        {% endif %}
-
+                        {% endfor %}
+                        </span>
+                        &nbsp&nbsp&nbsp        
                     {% endfor %}
                  
             </div>

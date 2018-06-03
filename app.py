@@ -80,6 +80,7 @@ def download():
 
 @app.route('/return-files/', methods=['GET', 'POST'])
 def return_files():
+    #Temporary dowload link for generated files
 	data = request.args.get("data")
 	filename = os.path.join(app.config['UPLOAD_FOLDER'], "ettuproblems.txt")
 	#os.remove(filename)
@@ -103,7 +104,7 @@ def solve_problem():
     """Render the main page"""
     challenge_type = int(request.form['challenge_type'])
     level = request.form['difficulty']
-    text =  make_caesar_challenge(1, level=level)[0]
+    text =  make_caesar_challenge(challenge_type, level=level)[0]
     
     alphabet = string.ascii_lowercase
 
@@ -119,6 +120,10 @@ def solve_problem():
 
 	
 def get_letter_frequencies(phrase):
+    # the ciphertext is broken into a list. Convert back to string
+    if isinstance(phrase, (list)):
+        phrase = ' '.join(phrase)
+ 
 	alphabet = string.ascii_lowercase
 	freq = {}
 	for letter in alphabet:
