@@ -55,14 +55,14 @@ def random_substution(plaintext):
     alphabet = string.ascii_lowercase
     new_alphabet = ''.join(random.sample(alphabet,len(alphabet)))
     trantab = string.maketrans(alphabet, new_alphabet)
-    return plaintext.translate(trantab)
+    return str(plaintext).translate(trantab)
 
 
 def make_rs_challenge(number_of_problems, level="easy"):
 	problems = []
 	for i in range(number_of_problems):
 		cleartext = get_random_text(level)
-		ciphertext = random_substution(str(cleartext))
+		ciphertext = random_substution(cleartext)
 		problems.append({
 				"cleartext":cleartext.split(),
 				"ciphertext":ciphertext.split(),

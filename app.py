@@ -4,7 +4,7 @@ from flask import Flask, render_template, redirect\
 , url_for, flash, request, session, send_file
 
 #local imports
-from caesar import make_caesar_challenge, make_rs_challenge 
+from caesar import make_caesar_challenge, make_rs_challenge, caesar, random_substution
 
 #just for me :)
 import json
@@ -12,12 +12,14 @@ import string
 import os
 import StringIO 
 import requests
+import random
 from werkzeug import secure_filename
 
 # Instantiating the flask Object
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = '/tmp/'
 config = {}
+indexed_quotes = {}
 
 @app.route('/')
 def home():
@@ -132,6 +134,59 @@ def get_letter_frequencies(phrase):
 	return { "keys":sorted(freq, key=freq.get, reverse=True),
 	         "values": sorted(freq.values(), reverse=True) }
 	
+
+    
+def load_indexed_quotes():
+    """This is inefficient, but I'm lazy...so fck it"""
+    with open('config/indexed_quotes.json', 'r') as f:
+        quotes = json.load(f)
+    indexed_quotes['easy'] = quotes['easy']
+    indexed_quotes['medium'] = quotes['medium']
+    indexed_quotes['hard'] = quotes['hard']
+
+    
+@app.route('/problem/<level>/<int:id>')
+def clear(level, id):
+    """
+    Return a problem
+    """
+    if not indexed_quotes:
+        load_indexed_quotes()
+        print "------- Got the quotes ---------"
+                
+    if level not in ['easy', 'medium', 'hard']:
+        return "No such problem"
+    
+    quote = indexed_quotes[level].get(str(id), "No such problem")
+    
+    return quote
+
+
+@app.route('/problem/<level>/<int:id>/<type>')
+def ciphered(level, id, type):
+    """
+    Return  cipher text
+    rot or sub
+    """
+    if not indexed_quotes:
+        load_indexed_quotes()
+        print "------- Got the quotes ---------"
+                
+    if level not in ['easy', 'medium', 'hard']:
+        return "No such puzzle"
+    
+    quote = indexed_quotes[level].get(str(id), 0).lower()
+    if not quote:
+        return "No such puzzle"
+    
+    
+    if type == 'rot':
+        return caesar(quote, random.randint(1,26))
+    elif type == 'sub':
+        return random_substution(quote)
+    else:
+        return "No such puzzle"
+
 
 
 if __name__ == "__main__":   
