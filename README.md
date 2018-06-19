@@ -11,8 +11,11 @@ __To get the cleartext__
 level is easy, medium, or hard
 
 __Caesar ciphered text__
+```
 /problem/{level}/{id}/rot
-
+```
 
 __Substitution ciphered text__
+```
 /problem/{level}/{id}/rot
+```
