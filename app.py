@@ -145,21 +145,6 @@ def load_indexed_quotes():
     indexed_quotes['hard'] = quotes['hard']
 
     
-@app.route('/problem/<level>/<int:id>')
-def clear(level, id):
-    """
-    Return a problem
-    """
-    if not indexed_quotes:
-        load_indexed_quotes()
-        print "------- Got the quotes ---------"
-                
-    if level not in ['easy', 'medium', 'hard']:
-        return "No such problem"
-    
-    quote = indexed_quotes[level].get(str(id), "No such problem")
-    
-    return quote
 
 
 @app.route('/problem/<level>/<int:id>/<type>')
@@ -181,13 +166,20 @@ def ciphered(level, id, type):
     
     
     if type == 'rot':
-        return caesar(quote, random.randint(1,26))
+        problem = caesar(quote, random.randint(1,26))
     elif type == 'sub':
-        return random_substution(quote)
+        problem =  random_substution(quote)
     else:
-        return "No such puzzle"
+        problem = "No such puzzle"
+        answer = ""
+    
+    
+    return render_template( "check_answer.html",
+                            problem =  problem,
+                            answer = quote )
 
 
 
 if __name__ == "__main__":   
 	app.run(debug=True)
+    

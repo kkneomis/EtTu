@@ -51,7 +51,7 @@ $(document).ready(function() {
 
     $sidebar = $('.sidebar');
 
-    $.material.init();
+    //$.material.init();
 
     window_width = $(window).width();
 

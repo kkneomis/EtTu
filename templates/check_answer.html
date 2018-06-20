@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block body %}
+<style>
+
+</style>
+    <div class="col-md-6 col-md-offset-3">        
+        <div class="card">
+            <div class="card-header" data-background-color="green">
+                <h4 class="title">Check Your answer</h4>
+                <p>You will see a check mark if your answer is correct</p>
+            </div>
+            <div class="card-content">
+                <form action="{{ url_for('processinput') }}" method="POST">
+                        
+                    <div class="form-group">
+                        <label>Cipher text</label><br>
+                        {{problem }}
+                    </div>
+                    <div class="form-group">
+                        <label>Enter your guess</label>
+                        <textarea id="answer" class="form-control"  rows="3"></textarea>
+                    </div>    
+                </form>
+            </div>
+            
+            
+            <div class="check_mark">
+              <div class="sa-icon sa-success animate">
+                <span class="sa-line sa-tip animateSuccessTip"></span>
+                <span class="sa-line sa-long animateSuccessLong"></span>
+                <div class="sa-placeholder"></div>
+                <div class="sa-fix"></div>
+              </div>
+            </div>
+            </div>
+        
+        
+    
+        
+        
+        
+    
+    </div>
+
+    <script>
+        $('.check_mark').hide()
+        console.log("{{answer | safe}}")
+        answer = '{{answer}}'.replace(/[^a-zA-Z]+/g, '').toLowerCase()
+        //console.log(answer)
+        $('#answer').keyup(function(){
+            $('.check_mark').show()
+            guess = $('#answer').val().replace(/[^a-zA-Z]+/g, '').toLowerCase()
+            //console.log(guess)
+            if (guess == answer){
+               $(".sa-success").addClass("hide");
+              setTimeout(function() {
+                $(".sa-success").removeClass("hide");
+              }, 10);
+            } else {
+                $('.check_mark').hide()
+            }
+        });
+        
+        
+           
+        
+        
+    </script>
+{% endblock %}
