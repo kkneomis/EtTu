@@ -4,7 +4,7 @@ from flask import Flask, render_template, redirect\
 , url_for, flash, request, session, send_file
 
 #local imports
-from caesar import make_caesar_challenge, make_rs_challenge, caesar, random_substution
+from caesar import *
 
 #just for me :)
 import json
@@ -29,6 +29,20 @@ def home():
     """
     return render_template("index.html")
 
+
+@app.route('/solve_menu')
+def solve_menu():
+    """
+    Render the page to choose a specific problem to solver
+    """
+    return render_template("solve_menu.html")
+
+@app.route('/guess_menu')
+def guess_menu():
+    """
+    Render the page to choose a specific problem to solver
+    """
+    return render_template("guess_menu.html")
 
 
 
@@ -93,28 +107,38 @@ def return_files():
 	except Exception as e:
 		return str(e)
 
-@app.route('/solve')
-def solve():
+@app.route('/solve_problem')
+def solve_problem():
     """
     Render the solve page
 	Request goes to solve_problem
     """
     return render_template("solve_main.html")
 
-
-@app.route('/solve/<level>/<int:id>/<challenge_type>')
-def solve_one(level='medium', id=1, challenge_type='rot'):
+@app.route('/solve')
+@app.route('/solve?challenge_type=<challenge_type>&difficulty=<level>&id=<id>', methods=['GET'])
+def solve(level="easy", id="-1", challenge_type="rot" ):
     """Solve a problem by id"""
+    
+    level =  request.args.get('level', 'easy')
+    id = request.args.get('id', -1)
+    challenge_type = request.args.get('challenge_type', 'rot')
+    
+    
     if not indexed_quotes:
         load_indexed_quotes()
         print "------- Got the quotes ---------"
-           
-    level = level
-    quote = indexed_quotes[level].get(str(id), 0).lower()
+    
+    if (not id) or (int(id) < 0):
+        print int(id)
+        quote = get_random_text(level)['content']
+        print "Getting random challenge"
+    else:
+        quote = indexed_quotes[level].get(str(id), "None").lower()
+        
     if not quote:
         return "No such puzzle"
     
-    ciphertext = "No such puzzle"
     #Create the problem based on the type
     if challenge_type == 'rot':
         ciphertext = caesar(quote, random.randint(1,26))
@@ -135,24 +159,6 @@ def solve_one(level='medium', id=1, challenge_type='rot'):
     						text=text,
     						alphabet=alphabet, 
                             challenge_type = challenge_type,
-    						cipher_text_freq = cipher_text_freq,
-    						cipher_text_keys = cipher_text_keys)
-
-
-@app.route('/solve_problem', methods=['GET', 'POST'])
-def solve_problem():
-    """Render the main page"""
-    challenge_type = int(request.form['challenge_type'])
-    level = request.form['difficulty']
-    text =  make_caesar_challenge(challenge_type, level=level)[0]
-    
-    alphabet = string.ascii_lowercase
-
-    cipher_text_freq =  get_letter_frequencies(text['ciphertext'])['values']
-    cipher_text_keys = json.dumps(get_letter_frequencies(text['ciphertext'])['keys'])
-    return render_template("solve.html", 
-    						text=text,
-    						alphabet=alphabet, 
     						cipher_text_freq = cipher_text_freq,
     						cipher_text_keys = cipher_text_keys)
 
@@ -184,13 +190,18 @@ def load_indexed_quotes():
 
     
 
-
-@app.route('/guess/<level>/<int:id>/<type>')
-def ciphered(level, id, type):
+@app.route('/guess')
+@app.route('/guess?challenge_type=<challenge_type>&difficulty=<level>&id=<id>', methods=['GET'])
+def guess(level="easy", id="-1", type="rot"):
     """
     Return  cipher text
     rot or sub
     """
+    
+    level =  request.args.get('level', 'easy')
+    id = request.args.get('id', -1)
+    challenge_type = request.args.get('challenge_type', 'rot')
+    
     if not indexed_quotes:
         load_indexed_quotes()
         print "------- Got the quotes ---------"
@@ -198,7 +209,14 @@ def ciphered(level, id, type):
     if level not in ['easy', 'medium', 'hard']:
         return "No such puzzle"
     
-    quote = indexed_quotes[level].get(str(id), 0).lower()
+    
+    if int(id) < 0:
+        print int(id)
+        quote = get_random_text(level)['content']
+        print "Getting random challenge"
+    else:
+        quote = indexed_quotes[level].get(str(id), "None").lower()
+        
     if not quote:
         return "No such puzzle"
     

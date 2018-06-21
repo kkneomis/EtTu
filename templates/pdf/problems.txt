@@ -1,7 +1,7 @@
 ET TU: {{ cipher_type }}
 
 {% for challenge  in challenges %}
-Problem #{{ loop.index  }}
-{{ challenge.ciphertext}}
+Problem #{{ challenge.number  }}
+{{ challenge.ciphertext | join(' ')}}
 	
 {% endfor %}

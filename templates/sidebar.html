@@ -9,12 +9,28 @@
                             <p>Create problems!</p>
                         </a>
                     </li>
-                    <li {%- if request.path == "/solve" %}
+                    <li {%- if request.path == "/solve_problem" %}
                         class="active"
                         {% endif%} >
-                        <a href="/solve">
+                        <a href="/solve_problem">
                             <i class="material-icons">extension</i>
-                            <p>Solve a puzzle</p>
+                            <p>Solve a random puzzle</p>
+                        </a>
+                    </li>
+                    <li {%- if request.path == "/solve_menu" %}
+                        class="active"
+                        {% endif%} >
+                        <a href="/solve_menu">
+                            <i class="material-icons">extension</i>
+                            <p>Solve by id</p>
+                        </a>
+                    </li>
+                    <li {%- if request.path == "/guess_menu" %}
+                        class="active"
+                        {% endif%} >
+                        <a href="/guess_menu">
+                            <i class="material-icons">extension</i>
+                            <p>Guess the answer</p>
                         </a>
                     </li>
                     

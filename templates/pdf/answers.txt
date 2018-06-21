@@ -1,13 +1,13 @@
 ET TU: {{ cipher_type }}
 
 {% for challenge  in challenges %}
-Problem #{{ loop.index  }}
+Problem #{{ challenge.number  }}
 
 Ciphertext:
-{{ challenge.ciphertext}}
+{{ challenge.ciphertext | join(' ')}}
 
 Cleartext: 
-{{ challenge.cleartext}}
+{{ challenge.cleartext | join(' ') }}
 {% if challenge.shift %}
 Shift: {{ challenge.shift}}
 {% endif %}
