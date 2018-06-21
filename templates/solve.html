@@ -20,8 +20,17 @@
      span{
         display: inline-block
      }
+     
+     .check_mark{
+         display: none;
+     }
+     
+     .sub{
+         display: none;
+     }
 
     </style>
+
 
 
  <div class="col-md-12">
@@ -42,17 +51,34 @@
                     <br><br>
                     {% for word in text.cleartext %}
                         <span>{% for letter in word %}
-                            <input type="text" size="1" class="{{letter | lower }} " id="test" type="number" value="" required>
+                            <input type="text" size="1" class="clear {{letter | lower }} "  type="number" value="" required>
                         {% endfor %}
                         </span>
                         &nbsp&nbsp&nbsp        
                     {% endfor %}
                  
-            </div>
+              </div> 
+                <div class="check_mark">
+                  <div class="sa-icon sa-success animate">
+                    <span class="sa-line sa-tip animateSuccessTip"></span>
+                    <span class="sa-line sa-long animateSuccessLong"></span>
+                    <div class="sa-placeholder"></div>
+                    <div class="sa-fix"></div>
+                  </div>
+                 </div>
+                
             </div>
      </div>
 </div>
 
+
+<div class="row {{challenge_type}}">
+    <div class="col-md-6 col-md-offset-3 text-center">
+        <h3>Helper alphabet</h3><input type=text placeholder="Shift #" id="alpha_shift">
+        <div id="alphabet_standard" ></div>
+        <div id="alphabet_shifted" ></div>
+    </div>
+</div>
 
     <div class="row">
         
@@ -67,8 +93,9 @@
             <div class="card card-chart">
                 <canvas id="cipherchart"></canvas>
             </div>
+            
         </div>
-
+        
     </div>
 
 <div class="row">
@@ -79,6 +106,7 @@
         <a href="/solve" class="btn btn-info btn-lg btn-block">Switch it up</a>
     </div>
 </div>
+
 
    
     <script type="text/javascript">
@@ -91,6 +119,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <script type="text/javascript">
+         $('.check_mark').hide()
         
         var normalchart = document.getElementById('normalchart').getContext('2d');
     
@@ -143,6 +172,51 @@
             options: {}
         });
 
+        
+         //$('.check_mark').hide()
+        answer = "{{text.cleartext | join('')}}"
+        console.log(answer)
+        $('.clear').keyup(function(){
+            guess_list = document.getElementsByClassName('clear')
+            guess = ''
+            for (var i = 0; i < guess_list.length; i++) { 
+                guess += guess_list[i].value
+            }
+            //console.log(guess)
+            if (guess == answer){
+                console.log('correct')
+                $('.check_mark').show()
+            } else{
+                $('.check_mark').hide()
+            }
+        });
+        
+        
+        //Helper Alphabets
+        alphabet_standard = 'abcdefghijklmnopqrstuvwxyz'.split('');
+        function generate_alphabet_html(alphabet, type){
+            //type is primary, danger, warning etc...
+            result = ''
+            for (var i = 0; i < alphabet.length; i++) { 
+                next_letter = '<span class="label label-'+ type + '">' + alphabet[i] + '</span>'
+                result += next_letter ;
+            }
+            return result
+        }
+        // Set default alphabet;
+        document.getElementById('alphabet_standard').innerHTML = generate_alphabet_html(alphabet_standard, 'primary')
+        $('#alpha_shift').keyup(function(){
+            shift = Number($('#alpha_shift').val()); //cast to number
+            if( Number.isInteger(shift)){
+                $.post( "/shift_alphabet", 
+                { 
+                    shift: shift
+                },
+                function( result ) {
+                    document.getElementById('alphabet_shifted').innerHTML = generate_alphabet_html(result, 'warning')
+                });
+            }
+        });
 
     
 

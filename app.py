@@ -101,6 +101,44 @@ def solve():
     """
     return render_template("solve_main.html")
 
+
+@app.route('/solve/<level>/<int:id>/<challenge_type>')
+def solve_one(level='medium', id=1, challenge_type='rot'):
+    """Solve a problem by id"""
+    if not indexed_quotes:
+        load_indexed_quotes()
+        print "------- Got the quotes ---------"
+           
+    level = level
+    quote = indexed_quotes[level].get(str(id), 0).lower()
+    if not quote:
+        return "No such puzzle"
+    
+    ciphertext = "No such puzzle"
+    #Create the problem based on the type
+    if challenge_type == 'rot':
+        ciphertext = caesar(quote, random.randint(1,26))
+    elif challenge_type == 'sub':
+        ciphertext =  random_substution(quote)
+
+           
+    # Cleartext and ciphertext to be parsed in the view
+    text= {}
+    text['ciphertext'] = ciphertext.split()
+    text['cleartext'] = quote.split()
+    
+    # Data for the letter frequency charts
+    alphabet = string.ascii_lowercase
+    cipher_text_freq =  get_letter_frequencies(ciphertext)['values']
+    cipher_text_keys = json.dumps(get_letter_frequencies(ciphertext)['keys'])
+    return render_template("solve.html", 
+    						text=text,
+    						alphabet=alphabet, 
+                            challenge_type = challenge_type,
+    						cipher_text_freq = cipher_text_freq,
+    						cipher_text_keys = cipher_text_keys)
+
+
 @app.route('/solve_problem', methods=['GET', 'POST'])
 def solve_problem():
     """Render the main page"""
@@ -123,15 +161,15 @@ def solve_problem():
 	
 def get_letter_frequencies(phrase):
     # the ciphertext is broken into a list. Convert back to string
-    if isinstance(phrase, (list)):
+    if isinstance(phrase, list):
         phrase = ' '.join(phrase)
  
-	alphabet = string.ascii_lowercase
-	freq = {}
-	for letter in alphabet:
-		freq[letter] = round(phrase.count(letter)/float(len(phrase)),10)
+    alphabet = string.ascii_lowercase
+    freq = {}
+    for letter in alphabet:
+        freq[letter] = round(phrase.count(letter)/float(len(phrase)),10)
 
-	return { "keys":sorted(freq, key=freq.get, reverse=True),
+    return { "keys":sorted(freq, key=freq.get, reverse=True),
 	         "values": sorted(freq.values(), reverse=True) }
 	
 
@@ -147,7 +185,7 @@ def load_indexed_quotes():
     
 
 
-@app.route('/problem/<level>/<int:id>/<type>')
+@app.route('/guess/<level>/<int:id>/<type>')
 def ciphered(level, id, type):
     """
     Return  cipher text
@@ -177,6 +215,17 @@ def ciphered(level, id, type):
     return render_template( "check_answer.html",
                             problem =  problem,
                             answer = quote )
+
+
+@app.route('/shift_alphabet', methods=['GET', 'POST'])
+def shift_alphabet():
+    shift = int(request.form['shift'])
+    alphabet = string.ascii_lowercase
+    try:
+        return caesar(alphabet, shift)
+    except:
+        return "Error"
+     
 
 
 
