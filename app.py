@@ -139,6 +139,8 @@ def solve(level="easy", id="-1", challenge_type="rot" ):
     if not quote:
         return "No such puzzle"
     
+    
+    ciphertext = "No such puzzle"
     #Create the problem based on the type
     if challenge_type == 'rot':
         ciphertext = caesar(quote, random.randint(1,26))
