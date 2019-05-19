@@ -18,6 +18,10 @@ from werkzeug import secure_filename
 # Instantiating the flask Object
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = '/tmp/'
+app.config.from_object(os.environ['APP_SETTINGS'])
+#app.config.from_object('module_name.DevelopmentConfig')
+#app.config.from_envvar('APP_SETTINGS')
+
 config = {}
 indexed_quotes = {}
 
@@ -250,5 +254,6 @@ def shift_alphabet():
 
 
 if __name__ == "__main__":   
-	app.run(debug=True)
+    print app.config['CONFIRM']
+    app.run(debug=app.config['DEBUG'])
     
