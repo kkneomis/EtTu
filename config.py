@@ -6,6 +6,7 @@ class Config(object):
     DEBUG = False
     TESTING = False
     CSRF_ENABLED = True
+    PROJECT_DIR = os.path.dirname(os.path.realpath('__file__'))
     UPLOAD_FOLDER = '/tmp/'
 
 class ProductionConfig(Config):

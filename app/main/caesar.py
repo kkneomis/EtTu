@@ -6,8 +6,7 @@ import random
 import re
 import os
 
-fileDir = os.path.dirname(os.path.realpath('__file__'))
-quotes_path = os.path.join(fileDir, 'config/indexed_quotes.json')
+quotes_path = os.path.join('app', 'main', 'config/indexed_quotes.json')
 
 with open(quotes_path, 'r') as f:
     quotes = json.load(f)

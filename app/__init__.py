@@ -4,7 +4,7 @@ from flask import Flask, render_template, redirect\
 , url_for, flash, request, session, send_file
 
 #local imports
-from app.caesar import *
+from app.main.caesar import *
 
 #just for me :)
 import json
@@ -188,7 +188,7 @@ def get_letter_frequencies(phrase):
     
 def load_indexed_quotes():
     """This is inefficient, but I'm lazy...so fck it"""
-    with open('config/indexed_quotes.json', 'r') as f:
+    with open('app/main/config/indexed_quotes.json', 'r') as f:
         quotes = json.load(f)
     indexed_quotes['easy'] = quotes['easy']
     indexed_quotes['medium'] = quotes['medium']
