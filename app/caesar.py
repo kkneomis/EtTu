@@ -4,8 +4,13 @@ import re
 import string
 import random
 import re
+import os
 
-with open('config/indexed_quotes.json', 'r') as f:
+script_dir = os.path.dirname(__file__)
+quotes_path = 'config/indexed_quotes.json'
+full_path = os.path.join(script_dir, quotes_path)
+
+with open(full_path, 'r') as f:
     quotes = json.load(f)
 
 

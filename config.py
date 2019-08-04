@@ -6,7 +6,6 @@ class Config(object):
     DEBUG = False
     TESTING = False
     CSRF_ENABLED = True
-    SECRET_KEY = "\xfd4\xa4\x08\xee,G\x92\x18c\x16\x94\xaaw\xdb\x0c\xe4\x13s \x8f'\x00/"
 
 
 class ProductionConfig(Config):
@@ -19,6 +18,7 @@ class StagingConfig(Config):
 
 
 class DevelopmentConfig(Config):
+    SECRET_KEY = "\xfd4\xa4\x08\xee,G\x92\x18c\x16\x94\xaaw\xdb\x0c\xe4\x13s \x8f'\x00/"
     DEVELOPMENT = True
     DEBUG = True
 
