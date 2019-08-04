@@ -6,11 +6,10 @@ import random
 import re
 import os
 
-script_dir = os.path.dirname(__file__)
-quotes_path = 'config/indexed_quotes.json'
-full_path = os.path.join(script_dir, quotes_path)
+fileDir = os.path.dirname(os.path.realpath('__file__'))
+quotes_path = os.path.join(fileDir, 'config/indexed_quotes.json')
 
-with open(full_path, 'r') as f:
+with open(quotes_path, 'r') as f:
     quotes = json.load(f)
 
 
@@ -90,9 +89,9 @@ def make_rs_challenge(number_of_problems, level="easy"):
 
 if __name__ == "__main__":
     shift = random.randint(1, 25)
-    print caesar(shift)
-    print "shift, is", shift
-    guess = int(raw_input("Guess the shift:"))
+    print(shift)
+    print(caesar("this is some string", shift))
+    guess = int(input("Guess the shift:"))
     while guess != shift:
-        guess = int(raw_input("Nah fam, guess again"))
-    print "Congratulations!"
+        guess = int(input("Nah fam, guess again\n"))
+    print("Congratulations!")

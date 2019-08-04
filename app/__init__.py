@@ -4,13 +4,12 @@ from flask import Flask, render_template, redirect\
 , url_for, flash, request, session, send_file
 
 #local imports
-from caesar import *
+from app.caesar import *
 
 #just for me :)
 import json
 import string
 import os
-import StringIO 
 import requests
 import random
 from werkzeug import secure_filename
@@ -21,11 +20,8 @@ application = Flask(__name__)
 #I'm lazy and want to use an abreviation
 app = application
 
-
-app.config['UPLOAD_FOLDER'] = '/tmp/'
 app.config.from_object(os.environ['APP_SETTINGS'])
-#app.config.from_object('module_name.DevelopmentConfig')
-#app.config.from_envvar('APP_SETTINGS')
+
 
 config = {}
 indexed_quotes = {}
@@ -135,13 +131,12 @@ def solve(level="easy", id="-1", challenge_type="rot" ):
     
     
     if not indexed_quotes:
+        # Get the quotes
         load_indexed_quotes()
-        print "------- Got the quotes ---------"
     
     if (not id) or (int(id) < 0):
-        print int(id)
+        # Get a random challenge
         quote = get_random_text(level)['content']
-        print "Getting random challenge"
     else:
         quote = indexed_quotes[level].get(str(id), "None").lower()
         
@@ -215,16 +210,14 @@ def guess(level="easy", id="-1", type="rot"):
     
     if not indexed_quotes:
         load_indexed_quotes()
-        print "------- Got the quotes ---------"
                 
     if level not in ['easy', 'medium', 'hard']:
         return "No such puzzle"
     
     
     if int(id) < 0:
-        print int(id)
+        # Get random challenge
         quote = get_random_text(level)['content']
-        print "Getting random challenge"
     else:
         quote = indexed_quotes[level].get(str(id), "None").lower()
         
@@ -254,7 +247,7 @@ def shift_alphabet():
         return caesar(alphabet, shift)
     except:
         return "Error"
-     
+
 
 
 
