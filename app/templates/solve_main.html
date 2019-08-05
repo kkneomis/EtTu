@@ -2,38 +2,42 @@
 
 {% extends "base.html" %}
 {% block body %}
-    <div class="col-md-8 col-md-offset-2">
-        <div class="card">
-            <div class="card-header" data-background-color="orange">
-                <h4 class="title">Solve a Specific Challenge</h4>
-                <p class="category">Choose the problem you want to solve</p>
-            </div>
-            <div class="card-content">
-                <form action="{{ url_for('solve') }}" method="GET">
 
-                    <div class="form-group">
-                        <label>Classification</label>
-                        <select class="form-control" name="challenge_type" required>
-                          <option value="rot">Rot Cipher</option>
-                          <option value="sub">Random Substitution</option>
-                        </select>
-                    </div>    
+    <div class="row">
+        <div class="col-12">
+            <!-- Recent Order Table -->
+            <div class="card card-table-border-none" id="recent-orders">
+                <div class="card-header justify-content-between">
+                    <h2>Solve a Specific Challenge</h2>
+                    <p>Choose the problem you want to solve</p>
+                </div>
+                <div class="card-body pt-0 pb-5">
+                    <form action="{{ url_for('solve') }}" method="GET">
+                        <div class="form-group">
+                            <label>Classification</label>
+                            <select class="form-control" name="challenge_type" required>
+                              <option value="rot">Rot Cipher</option>
+                              <option value="sub">Random Substitution</option>
+                            </select>
+                        </div>    
 
-                    <div class="form-group">
-                        <label>Difficulty</label>
-                        <select class="form-control" name="difficulty" required>
-                          <option value="easy">Easy</option>
-                          <option value="medium">Medium</option>
-                          <option value="hard">Hard</option>
-                        </select>
-                    </div>
+                        <div class="form-group">
+                            <label>Difficulty</label>
+                            <select class="form-control" name="difficulty" required>
+                              <option value="easy">Easy</option>
+                              <option value="medium">Medium</option>
+                              <option value="hard">Hard</option>
+                            </select>
+                        </div>
 
-                    <div class="form-group">
-                        <input type="submit" value="Create Problems" class="btn btn-primary btn-lg btn-block">
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <input type="submit" value="Create Problems" class="btn btn-primary btn-lg btn-block">
+                        </div>
+                    </form>
+                
+                </div>
             </div>
         </div>
-
     </div>
+
 {% endblock %}

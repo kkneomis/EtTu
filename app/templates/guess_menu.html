@@ -2,14 +2,18 @@
 
 {% extends "base.html" %}
 {% block body %}
-    <div class="col-md-8 col-md-offset-2">
-        <div class="card">
-            <div class="card-header" data-background-color="orange">
-                <h4 class="title">Guess the answer</h4>
-                <p class="category">Choose a problem and check the answer</p>
-            </div>
-            <div class="card-content">
-                <form action="{{ url_for('guess') }}" method="GET">
+
+    <div class="row">
+        <div class="col-12">
+            <!-- Recent Order Table -->
+            <div class="card card-table-border-none" id="recent-orders">
+                <div class="card-header justify-content-between">
+                    <h2>Guess the answer <br>
+                    <small>Choose a problem and check the answer</small>
+                    </h2>
+                </div>
+                <div class="card-body pt-0 pb-5">
+                    <form action="{{ url_for('guess') }}" method="GET">
 
                     <div class="form-group">
                         <label>Classification</label>
@@ -38,8 +42,10 @@
                         <input type="submit" value="Create Problems" class="btn btn-primary btn-lg btn-block">
                     </div>
                 </form>
+                </div>
             </div>
         </div>
-
     </div>
+
+
 {% endblock %}

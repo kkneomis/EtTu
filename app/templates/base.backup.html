@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+    <title>Et Tu?</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" >
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/material-dashboard.css') }}" >
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons" rel='stylesheet'>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}" ></script>
+    <script src="{{ url_for('static', filename='js/perfect-scrollbar.jquery.min.js') }}" ></script>
+    <script src="{{ url_for('static', filename='js/material-dashboard.js') }}" ></script>
+     <script src="{{ url_for('static', filename='js/chartist.min.js') }}" ></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+      
+
+    <div class="wrapper">
+         <div class="sidebar" data-color="purple" data-image="{{ url_for('static', filename='img/sidebar-1.jpg') }}">
+            <!--
+        Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
+
+        Tip 2: you can also add an image using data-image tag
+    -->
+            <div class="logo">
+                <a href="/" class="simple-text">
+                    Et Tu?
+                </a>
+            </div>
+             
+            {% include "sidebar.html" %}
+        </div>
+        {% include "header.html" %}
+        <div class="content">
+            <div class="container-fluid">
+            {% block body %}{% endblock %}
+            </div>
+               <footer class="footer">
+                    <p class="copyright">
+                        &copy;
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script>
+                        <a href="http://urbannerd.org">Urban Nerd</a>, made with love for a safer web
+                    </p>
+            </footer>
+        </div>       
+    </div>
+    
+    <style>
+        .caesar{
+            text-align: center;
+            margin: 20px;
+        }  
+    </style>
+     
+ 
+
+  </body>
+</html>
