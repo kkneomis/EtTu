@@ -4,26 +4,23 @@
     <div class="row">
         <div class="col-12">
             <!-- Recent Order Table -->
-            <div class="card card-table-border-none" id="recent-orders">
+            <div class="card card-table-border-none" >
                 <div class="card-header justify-content-between">
-                    <h2>Recent Orders</h2>
-                    <div class="date-range-report">
-                        <span></span>
-                    </div>
+                    <h2>Download</h2>
                 </div>
-                <div class="card-body pt-0 pb-5"></div>
+                <div class="card-body pt-0 pb-5">
+                    <div class="well">
+         
+                        <a href="{{ questions_link }}" download="questions.txt"><button class='btn btn-lg btn-primary btn-block' >Download Questions!</button></a>
+                        
+                        <br><br>
+                        
+                        <a href="{{ answers_link }}" download="answers.txt"><button class='btn btn-lg btn-success btn-block' >Download Answers!</button></a>
+                    </div>
+                
+                </div>
             </div>
         </div>
     </div>
 
-
-
-    <div class="col-md-6 col-md-offset-3">
-        <h2>Download</h2>
-        <div class="well">
-         
-            <a href="{{ questions_link }}" download="questions.txt"><button class='btn btn-lg btn-primary btn-block' >Download Questions!</button></a>
-            <a href="{{ answers_link }}" download="answers.txt"><button class='btn btn-lg btn-success btn-block' >Download Answers!</button></a>
-        </div>
-    </div>
 {% endblock %}
