@@ -28,7 +28,10 @@
      .sub{
          display: none;
      }
-
+     
+     .cipher{
+         background: #f1f1f1;
+     }
     </style>
 
     <div class="row">
@@ -36,90 +39,89 @@
             <!-- Recent Order Table -->
             <div class="card card-table-border-none" id="recent-orders">
                 <div class="card-header justify-content-between">
-                    <h2>Recent Orders</h2>
-                    <div class="date-range-report">
-                        <span></span>
-                    </div>
+                    <h2>Decrypt the quote!</h2>
                 </div>
-                <div class="card-body pt-0 pb-5"></div>
+                <div class="card-body pt-0 pb-5">
+                    <div class="well">
+                        {% for word in text.ciphertext %}
+                            <span>{% for letter in word %}
+                                    <input type="text" size="1"  class="cipher"  type="number" value="{{ letter }}" disabled>
+                            {% endfor %}
+                            </span>
+                            &nbsp&nbsp&nbsp
+                        {% endfor %}
+                        <br><br>
+                        {% for word in text.cleartext %}
+                            <span>{% for letter in word %}
+                                <input type="text" size="1" class="clear {{letter | lower }} "  type="number" value="" required>
+                            {% endfor %}
+                            </span>
+                            &nbsp&nbsp&nbsp        
+                        {% endfor %}
+
+                  </div> 
+                    <div class="check_mark">
+                      <div class="sa-icon sa-success animate">
+                        <span class="sa-line sa-tip animateSuccessTip"></span>
+                        <span class="sa-line sa-long animateSuccessLong"></span>
+                        <div class="sa-placeholder"></div>
+                        <div class="sa-fix"></div>
+                      </div>
+                     </div>
+
+                </div>
             </div>
         </div>
     </div>
 
 
-
-
- <div class="col-md-12">
-        <div class="card">
-            <div class="card-header" data-background-color="red">
-                <h4 class="title">Decrypt the quote!</h4>
-                <p class="category"></p>
-            </div>
-            <div class="card-content">
-                <div class="well">
-                    {% for word in text.ciphertext %}
-                        <span>{% for letter in word %}
-                                <input type="text" size="1"  class="cipher"  type="number" value="{{ letter }}" disabled>
-                        {% endfor %}
-                        </span>
-                        &nbsp&nbsp&nbsp
-                    {% endfor %}
-                    <br><br>
-                    {% for word in text.cleartext %}
-                        <span>{% for letter in word %}
-                            <input type="text" size="1" class="clear {{letter | lower }} "  type="number" value="" required>
-                        {% endfor %}
-                        </span>
-                        &nbsp&nbsp&nbsp        
-                    {% endfor %}
-                 
-              </div> 
-                <div class="check_mark">
-                  <div class="sa-icon sa-success animate">
-                    <span class="sa-line sa-tip animateSuccessTip"></span>
-                    <span class="sa-line sa-long animateSuccessLong"></span>
-                    <div class="sa-placeholder"></div>
-                    <div class="sa-fix"></div>
-                  </div>
-                 </div>
-                
-            </div>
-     </div>
-</div>
 
 
 <div class="row {{challenge_type}}">
-    <div class="col-md-6 col-md-offset-3 text-center">
-        <h3>Helper alphabet</h3><input type=text placeholder="Shift #" id="alpha_shift">
-        <div id="alphabet_standard" ></div>
-        <div id="alphabet_shifted" ></div>
+    <div class="col-12">
+        <div class="card card-table-border-none">
+            <div class="card-body pt-0 pb-5">
+                <h3>Helper alphabet</h3><input type=text placeholder="Shift #" id="alpha_shift">
+                <div id="alphabet_standard" ></div>
+                <div id="alphabet_shifted" ></div>
+            </div>
+        </div>
     </div>
 </div>
 
-    <div class="row">
-        
-        <div class="col-md-6">
-            <div class="card card-chart">
-                <canvas id="normalchart"></canvas>
+
+<div class="row">
+        <div class="col-12">
+            <!-- Recent Order Table -->
+            <div class="card card-table-border-none" id="recent-orders">
+                <div class="card-header justify-content-between">
+                    <h2>Need help? Here are the letter frequencies</h2>
+                </div>
+                <div class="card-body pt-0 pb-5">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card card-chart">
+                                <canvas id="normalchart"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card card-chart">
+                                <canvas id="cipherchart"></canvas>
+                            </div>
+                         </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-
-        <div class="col-md-6">
-            <div class="card card-chart">
-                <canvas id="cipherchart"></canvas>
-            </div>
-            
-        </div>
-        
     </div>
+
 
 <div class="row">
     <div class="col-md-6">
-        <a href="javascript:window.location.reload(true)" type="submit" class="btn btn-primary btn-lg btn-block">Try another like this!</a>
+        <a href="javascript:window.location.reload(true)" class="mb-1 btn btn-block btn-primary">Try another like this!</a>
     </div>
     <div class="col-md-6">
-        <a href="/solve" class="btn btn-info btn-lg btn-block">Switch it up</a>
+        <a href="/solve" class="mb-1 btn btn-block btn-success">Switch it up</a>
     </div>
 </div>
 
@@ -182,8 +184,6 @@
                 }]
 
             },
-
-       
             // Configuration options go here
             options: {}
         });
@@ -214,7 +214,7 @@
             //type is primary, danger, warning etc...
             result = ''
             for (var i = 0; i < alphabet.length; i++) { 
-                next_letter = '<span class="label label-'+ type + '">' + alphabet[i] + '</span>'
+                next_letter = '<span class="mb-2 mr-2 badge badge-'+ type + '">' + alphabet[i] + '</span>'
                 result += next_letter ;
             }
             return result
