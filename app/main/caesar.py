@@ -68,7 +68,7 @@ def make_caesar_challenge(number_of_problems, level="easy"):
 def random_substution(plaintext):
     alphabet = string.ascii_lowercase
     new_alphabet = ''.join(random.sample(alphabet, len(alphabet)))
-    trantab = string.maketrans(alphabet, new_alphabet)
+    trantab = str.maketrans(alphabet, new_alphabet)
     return str(plaintext).translate(trantab)
 
 

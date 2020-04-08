@@ -20,7 +20,7 @@ application = Flask(__name__)
 #I'm lazy and want to use an abreviation
 app = application
 
-app.config.from_object(os.environ['APP_SETTINGS'])
+app.config.from_object(os.environ['APPLICATION_SETTINGS'])
 
 
 config = {}
